@@ -2,110 +2,121 @@ import React, { useEffect, useState } from "react";
 import testImage from "./car.jpg";
 import "./App.css";
 
-//import * as tf from "@tensorflow/tfjs-core";
 import "@tensorflow/tfjs-backend-cpu";
 import "@tensorflow/tfjs-backend-webgl";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 
+interface Response {
+  className: string;
+  probability: number;
+}
+enum Actions {
+  Analyse = "analyse",
+  Done = "done",
+}
+
 const App: React.FC = () => {
   const [predictions, setPredictions] = useState<any>([]);
   const [myimage, setMyimage] = useState({ src: testImage });
-  const [action, setAction] = useState("predict");
+  const [action, setAction] = useState(Actions.Analyse);
 
   const Image = () => {
-    return <img id="img" src={myimage.src} className="main-image" alt="logo" />;
-  };
-
-  function Predictions(pd: any) {
-    console.log("P", predictions);
     return (
       <div>
-        <p>dsd</p>
-        {predictions.length}
-        <ul>
+        <img id="img" src={myimage.src} className="main-image" alt="logo" />
+      </div>
+    );
+  };
+
+  function Prediction(props: any) {
+    const prediction = props.prediction;
+    return (
+      <li key={prediction.rank}>
+        {prediction.rank}: {prediction.item}
+        {(prediction.probability * 100).toFixed(2)}%
+      </li>
+    );
+  }
+
+  function Predictions() {
+    return (
+      <div>
+        <h2>I think this is likely to be...</h2>
+        <ul className="predictions">
           {predictions.length > 0 &&
-            predictions.map((value: any, key: any) => {
-              return (
-                <li key={key}>
-                  {key}
-                  {value.item}
-                  {value.probability}
-                </li>
-              );
+            predictions.map((prediction: any, key: any) => {
+              return <Prediction key={key} prediction={prediction} />;
             })}
         </ul>
       </div>
     );
   }
 
-  const loadImage = (e: any) => {
-    console.log(e.target.files[0].name);
-    console.log(e.target.files);
-    //  const file = e.target.files[0].name;
-    // const img = document.getElementById("img") as HTMLImageElement;
-
-    setAction("predict");
+  const uploadImage = (e: any) => {
+    setAction(Actions.Analyse);
     setMyimage({ src: URL.createObjectURL(e.target.files[0]) });
-    //  test());
   };
 
-  const test = async () => {
-    const img = document.getElementById("img") as HTMLImageElement;
+  const buildPredictionArray = (obj: Response) => {
+    const array = [];
+    for (const [key, value] of Object.entries(obj)) {
+      array.push({
+        rank: Number(key) + 1,
+        item: value.className,
+        probability: value.probability,
+      });
+    }
+    console.log("array", array);
+    setPredictions(array);
+  };
 
-    console.log("run");
-    console.log(img);
+  const analyseImage = async () => {
+    setAction(Actions.Done);
+    const imageToClassify = document.getElementById("img") as HTMLImageElement;
+
     const version = 2;
     const alpha = 0.5;
     const model = await mobilenet.load({ version, alpha });
 
     console.log(testImage);
 
-    // Classify the image.
-    const predictions2 = await model.classify(img);
-    const predictions3 = [];
-    for (const [key, value] of Object.entries(predictions2)) {
-      console.log(`${key}: ${value.probability}`);
-      predictions3.push({
-        rank: key,
-        item: value.className,
-        probability: value.probability,
-      });
-    }
-    console.log("predictions3", predictions3);
-    setPredictions(predictions3);
-    console.log("Predictions2");
-    console.log(typeof predictions2);
-    console.log(predictions2);
+    const response: any = await model.classify(imageToClassify);
+    buildPredictionArray(response);
 
     // Get the logits.
-    const logits = model.infer(img);
+    const logits = model.infer(imageToClassify);
     console.log("Logits");
     logits.print(true);
 
     // Get the embedding.
-    const embedding = model.infer(img, true);
+    const embedding = model.infer(imageToClassify, true);
     console.log("Embedding");
     embedding.print(true);
-    setAction("image");
   };
+
   useEffect(() => {
-    // Update the document title using the browser API
-    // if (predictions && Object.keys(predictions).length === 0) {
-    console.log("ssas", action, predictions);
-    //  if (predictions.length === 0) {
-    if (action === "predict") {
-      test();
+    if (action === "analyse") {
+      analyseImage();
     }
   });
 
   return (
     <div className="App">
       <header className="App-header">
-        <input type="file" id="single" onChange={loadImage} />
-        <Image />
-
-        <Predictions predictions={predictions} />
+        <h1>TensorFlow Image Classification Demo using Mobilenet</h1>
       </header>
+
+      <Image />
+      <div>
+        <div>Upload an image to classify</div>
+        <input
+          type="file"
+          id="single"
+          accept="image/png, image/jpeg, image/webp"
+          onChange={uploadImage}
+        />
+      </div>
+      <Predictions />
     </div>
   );
 };
