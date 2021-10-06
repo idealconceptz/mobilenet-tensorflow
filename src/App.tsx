@@ -37,12 +37,6 @@ const App: React.FC = () => {
       </div>
     );
   }
-  function validateResponse(response: any) {
-    if (!response.ok) {
-      throw Error(response.statusText);
-    }
-    return response;
-  }
 
   const loadImage = (e: any) => {
     console.log(e.target.files[0].name);
