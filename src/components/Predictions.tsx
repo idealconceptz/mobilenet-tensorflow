@@ -5,6 +5,9 @@ const Predictions: FC<any> = (props) => {
   const predictions = props.predictions;
   return (
     <div className={`predictions-panel`}>
+      <div
+        className={` ${props.predictionAnimate ? "loader-hidden" : "loader"}`}
+      ></div>
       <h2>I think this is likely to be...</h2>
       <ol className="predictions">
         {predictions.length > 0 &&
@@ -13,7 +16,7 @@ const Predictions: FC<any> = (props) => {
               <Prediction
                 key={key}
                 prediction={prediction}
-                imageAnimate={props.imageAnimate}
+                predictionAnimate={props.predictionAnimate}
               />
             );
           })}

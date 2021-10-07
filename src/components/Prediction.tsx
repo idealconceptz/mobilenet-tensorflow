@@ -5,7 +5,9 @@ const Prediction: FC<any> = (props: any) => {
   return (
     <li
       key={prediction.rank}
-      className={`prediction ${props.imageAnimate ? "prediction-fadein" : ""}`}
+      className={`prediction ${
+        props.predictionAnimate ? "prediction-fadein" : "prediction-fadeout"
+      }`}
     >
       <span>{prediction.item}</span>&nbsp;-&nbsp;<i>probability</i>
       &nbsp;
