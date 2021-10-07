@@ -20,6 +20,8 @@
 .App-footer a {
   text-decoration: none;
   color: rgb(102, 102, 107);
+
+  padding: 10vh 1vh;
 }
 
 .image-container {

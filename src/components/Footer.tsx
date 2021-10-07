@@ -3,9 +3,17 @@ import { FC } from "react";
 const Footer: FC<any> = () => {
   return (
     <footer className="App-footer">
-      <a href="https://zachtownsend.com" target="_blank" rel="noreferrer">
-        Created by Zach Townsend
-      </a>{" "}
+      <a href="https://twitter.com/ZachThat" target="_blank" rel="noreferrer">
+        Created by @ZachThat
+      </a>
+      -
+      <a
+        href="https://github.com/idealconceptz/mobilenet-tensorflow"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Code available on Github
+      </a>
     </footer>
   );
 };
