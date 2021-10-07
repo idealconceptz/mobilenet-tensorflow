@@ -1,34 +1,35 @@
-import { FC, useEffect, useState } from "react";
-import "@tensorflow/tfjs-backend-cpu";
+import { FC, useState } from "react";
 import "@tensorflow/tfjs-backend-webgl";
+import "@tensorflow/tfjs-backend-cpu";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import "./App.css";
-import testImage from "./car.jpg";
+import testImage from "./dog.jpg";
 import Heading from "./components/Heading";
 import Image from "./components/Image";
 import Predictions from "./components/Predictions";
 import Upload from "./components/Upload";
 
-interface Response {
+interface IResponse {
   className: string;
   probability: number;
-}
-enum Actions {
-  Analyse,
-  Done,
 }
 
 const App: FC = () => {
   const [predictions, setPredictions] = useState<any>([]);
   const [imageSrc, setImageSrc] = useState(testImage);
-  const [action, setAction] = useState(Actions.Analyse);
+  const [imageAnimate, setImageAnimate] = useState(false);
 
   const uploadImage = (e: any) => {
-    setAction(Actions.Analyse);
+    setImageAnimate(false);
     setImageSrc(URL.createObjectURL(e.target.files[0]));
   };
 
-  const buildPredictionArray = (obj: Response) => {
+  const getImageFromUrl = (e: any) => {
+    console.log(e.target.value);
+    setImageSrc(e.target.value);
+  };
+
+  const buildPredictionArray = (obj: IResponse) => {
     const array = [];
     for (const [key, value] of Object.entries(obj)) {
       array.push({
@@ -40,39 +41,30 @@ const App: FC = () => {
     setPredictions(array);
   };
 
-  const analyseImage = async () => {
-    setAction(Actions.Done);
-    const imageToClassify = document.getElementById("img") as HTMLImageElement;
-
+  const analyseImage = async (imageToClassify: HTMLImageElement) => {
+    setImageAnimate(true);
     const version = 2;
-    const alpha = 0.5;
+    const alpha = 1;
     const model = await mobilenet.load({ version, alpha });
-    const response: any = await model.classify(imageToClassify);
+    const topk = 10;
+    const response: any = await model.classify(imageToClassify, topk);
     buildPredictionArray(response);
-
-    // Get the logits.
-    const logits = model.infer(imageToClassify);
-    console.log("Logits");
-    logits.print(true);
-
-    // Get the embedding.
-    const embedding = model.infer(imageToClassify, true);
-    console.log("Embedding");
-    embedding.print(true);
   };
-
-  useEffect(() => {
-    if (action === Actions.Analyse) {
-      analyseImage();
-    }
-  });
 
   return (
     <div className="App">
       <Heading />
-      <Image src={imageSrc} />
-      <Upload onChange={uploadImage} />
-      <Predictions predictions={predictions} />
+      <Image
+        src={imageSrc}
+        onLoaded={analyseImage}
+        imageAnimate={imageAnimate}
+      />
+      <Predictions predictions={predictions} imageAnimate={imageAnimate} />
+      <Upload
+        onChange={uploadImage}
+        imageSrc={imageSrc}
+        getImageFromUrl={getImageFromUrl}
+      />
     </div>
   );
 };

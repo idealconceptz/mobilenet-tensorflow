@@ -2,38 +2,118 @@
   text-align: center;
 }
 
-.main-image {
-  height: 40vmin;
-  margin: 1vh auto;
-  pointer-events: none;
-}
-
-.predictions {
-  list-style: none;
-  text-align: left;
-  width: 50vh;
-  margin: 50px auto;
-  padding: 5vh;
-  background: rgb(226, 211, 211);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
   background-color: #282c34;
-  min-height: 10vh;
+  min-height: 6vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 1vmin);
+  font-size: calc(6px + 1vmin);
   color: white;
+  margin-bottom: 2vh;
 }
 
-.App-link {
-  color: #61dafb;
+.main-image {
+  height: 30vmin;
+  margin: 0 auto;
+  pointer-events: none;
+  border-radius: 1em;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.image-fadein {
+  animation: 0.5s ease 0s normal forwards 1 fadein;
+}
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.image-fadeout {
+  animation: 0.5s ease 0s normal forwards 1 fadeout;
+}
+
+.predictions-panel {
+  max-width: 50vh;
+  margin: 0vh auto 2vh auto;
+  padding: 2vh 5vh;
+  background: rgb(213, 213, 224);
+  border-radius: 1em;
+}
+
+.predictions {
+  text-align: left;
+}
+.prediction {
+  font-size: 1em;
+}
+.prediction span {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+.prediction i {
+  font-size: 0.8em;
+}
+.prediction:nth-child(10n + 1) {
+  font-size: 1.5em;
+}
+.prediction-fadein {
+  opacity: 0;
+  animation: fadein 0.9s 1;
+  animation-fill-mode: forwards;
+}
+.prediction-fadein:nth-child(10n + 1) {
+  animation-delay: 0.5s;
+  color: blue;
+}
+.prediction-fadein:nth-child(10n + 2) {
+  animation-delay: 1s;
+}
+.prediction-fadein:nth-child(10n + 3) {
+  animation-delay: 1.5s;
+}
+.prediction-fadein:nth-child(10n + 4) {
+  animation-delay: 2s;
+}
+.prediction-fadein:nth-child(10n + 5) {
+  animation-delay: 2.5s;
+}
+.prediction-fadein:nth-child(10n + 6) {
+  animation-delay: 3s;
+}
+.prediction-fadein:nth-child(10n + 7) {
+  animation-delay: 3.5s;
+}
+.prediction-fadein:nth-child(10n + 8) {
+  animation-delay: 4s;
+}
+.prediction-fadein:nth-child(10n + 9) {
+  animation-delay: 4.5s;
+}
+.prediction-fadein:nth-child(10n + 10) {
+  animation-delay: 4.5s;
+}
+
+.upload-panel {
+  max-width: 50vh;
+  margin: 2vh auto;
+  padding: 2vh 5vh;
+  border: 2px solid black;
+  background: white;
+  border-radius: 1em;
+}
+.upload-panel input {
+  width: 80%;
+  height: 2em;
 }
