@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import "@tensorflow/tfjs-backend-webgl";
 import "@tensorflow/tfjs-backend-cpu";
 import * as mobilenet from "@tensorflow-models/mobilenet";
@@ -42,6 +42,7 @@ const App: FC = () => {
   const [predictionAnimate, setPredictionAnimate] = useState(false);
   const [imageCount, setImageCount] = useState(0);
   const [imageSrc, setImageSrc] = useState(imageList[0]);
+  const [isError, setIsError] = useState(false);
   const minCount = 0;
   const maxCount = imageList.length - 1;
 
@@ -70,6 +71,7 @@ const App: FC = () => {
   const analyseImage = async (imageToClassify: HTMLImageElement) => {
     setImageAnimate(true);
     setPredictionAnimate(false);
+    setIsError(false);
     const version = 2;
     const alpha = 1;
     const model = await mobilenet.load({ version, alpha });
@@ -91,17 +93,23 @@ const App: FC = () => {
     setImageSrc(imageList[nextImage]);
     setImageCount(nextImage);
   };
+  const onError = (e: any) => {
+    if (e.target.id === "img") {
+      setIsError(true);
+    }
+  };
 
   return (
     <div className="App">
       <Header />
-
       <Image
         src={imageSrc}
         onLoaded={analyseImage}
         imageAnimate={imageAnimate}
         goLeft={goLeft}
         goRight={goRight}
+        onError={onError}
+        isError={isError}
       />
       <Predictions
         predictions={predictions}
