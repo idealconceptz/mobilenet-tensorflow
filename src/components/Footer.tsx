@@ -4,7 +4,7 @@ const Footer: FC<any> = () => {
   return (
     <footer className="App-footer">
       <a href="https://twitter.com/ZachThat" target="_blank" rel="noreferrer">
-        Created by @ZachThat
+        Created by @idealconceptz
       </a>
       -
       <a

@@ -1,0 +1,77 @@
+.image-container {
+  position: relative;
+}
+
+.image-section {
+  padding: 0 1.5rem;
+}
+
+.image-middle {
+  display: block;
+  margin: 0 auto;
+  max-width: 1024px;
+}
+.main-image {
+  width: 100%;
+  pointer-events: none;
+  border-radius: 1em;
+  border: solid 1px #ddd;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.error-panel {
+  width: 50%;
+  margin: 1rem auto;
+  border-radius: 1em;
+
+  overflow: hidden;
+}
+.show-error {
+  color: red;
+  font-weight: bold;
+}
+.hide-error {
+  color: transparent;
+}
+.arrow-button {
+  width: 10vh;
+  height: 10vh;
+  margin: 0;
+  position: absolute;
+  top: 40%;
+  border: none;
+  background: transparent;
+}
+.arrow-button img {
+  height: 100%;
+}
+.left-button {
+  left: 10%;
+}
+
+.right-button {
+  right: 10%;
+  transform: ScaleX(-1);
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.image-fadein {
+  animation: 0.5s ease 0s normal forwards 1 fadein;
+}
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.image-fadeout {
+  animation: 0.5s ease 0s normal forwards 1 fadeout;
+}

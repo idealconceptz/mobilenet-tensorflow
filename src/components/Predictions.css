@@ -1,0 +1,135 @@
+.predictions-section {
+  padding: 0 1.5rem;
+}
+.predictions-panel {
+  background: white;
+  border-radius: 1em;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 2rem;
+  border: solid 1px #ddd;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.predictions {
+  text-align: center;
+  list-style-position: inside;
+}
+.prediction {
+  font-size: 1em;
+}
+.prediction span {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+.prediction i {
+  font-size: 0.8em;
+}
+.prediction:nth-child(1) {
+  font-size: 1.5em;
+}
+.prediction-fadein {
+  opacity: 0;
+  animation: fadein 0.9s 1;
+  animation-fill-mode: forwards;
+}
+.prediction-fadein:nth-child(1) {
+  animation-delay: 0s;
+  color: blue;
+}
+.prediction-fadein:nth-child(2) {
+  animation-delay: 0.5s;
+}
+.prediction-fadein:nth-child(3) {
+  animation-delay: 1s;
+}
+.prediction-fadein:nth-child(4) {
+  animation-delay: 1.5s;
+}
+.prediction-fadein:nth-child(5) {
+  animation-delay: 2s;
+}
+.prediction-fadein:nth-child(6) {
+  animation-delay: 2.5s;
+}
+.prediction-fadein:nth-child(7) {
+  animation-delay: 3s;
+}
+.prediction-fadein:nth-child(8) {
+  animation-delay: 3.5s;
+}
+.prediction-fadein:nth-child(9) {
+  animation-delay: 4s;
+}
+.prediction-fadein:nth-child(10) {
+  animation-delay: 4.5s;
+}
+.prediction-fadeout {
+  opacity: 0;
+}
+
+.loader-hidden {
+  width: 1.5em;
+  height: 2.5em;
+  margin: 0px 0 30px 0;
+  position: relative;
+  float: right;
+}
+.loader,
+.loader:before,
+.loader:after {
+  float: right;
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation: load7 1.8s infinite ease-in-out;
+  animation: load7 1.8s infinite ease-in-out;
+}
+.loader {
+  color: #ffffff;
+  font-size: 10px;
+  margin: 0px 0 30px 0;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  top: 0;
+}
+.loader:before {
+  left: -3.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+.loader:after {
+  left: 3.5em;
+}
+@-webkit-keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+@keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}

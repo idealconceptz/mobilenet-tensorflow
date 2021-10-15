@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 import "@tensorflow/tfjs-backend-webgl";
 import "@tensorflow/tfjs-backend-cpu";
 import * as mobilenet from "@tensorflow-models/mobilenet";
+import "bulma/css/bulma.min.css";
 import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -42,18 +43,30 @@ const App: FC = () => {
   const [predictionAnimate, setPredictionAnimate] = useState(false);
   const [imageCount, setImageCount] = useState(0);
   const [imageSrc, setImageSrc] = useState(imageList[0]);
+  const [imageUrl, setImageUrl] = useState("");
   const [isError, setIsError] = useState(false);
   const minCount = 0;
   const maxCount = imageList.length - 1;
 
   const uploadImage = (e: any) => {
+    console.log(e.target.files);
     setImageAnimate(false);
+    if (
+      !e.target.files ||
+      e.target.files.length === 0 ||
+      !e.target.files[0].name
+    )
+      return;
+    setIsError(false);
     setImageSrc(URL.createObjectURL(e.target.files[0]));
   };
 
   const getImageFromUrl = (e: any) => {
+    if (e.target.value.length < 2) return;
     setImageAnimate(false);
+    setIsError(false);
     setImageSrc(e.target.value);
+    setImageUrl(e.target.value);
   };
 
   const buildPredictionArray = (obj: IResponse) => {
@@ -102,6 +115,14 @@ const App: FC = () => {
   return (
     <div className="App">
       <Header />
+      <Upload
+        onChange={uploadImage}
+        imageSrc={imageSrc}
+        setImageSrc={setImageSrc}
+        imageUrl={imageUrl}
+        setImageUrl={setImageUrl}
+        getImageFromUrl={getImageFromUrl}
+      />
       <Image
         src={imageSrc}
         onLoaded={analyseImage}
@@ -115,11 +136,7 @@ const App: FC = () => {
         predictions={predictions}
         predictionAnimate={predictionAnimate}
       />
-      <Upload
-        onChange={uploadImage}
-        imageSrc={imageSrc}
-        getImageFromUrl={getImageFromUrl}
-      />
+
       <Footer />
     </div>
   );

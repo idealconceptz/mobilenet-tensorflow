@@ -1,40 +1,49 @@
 import { FC } from "react";
+import "./Image.css";
 
 const Image: FC<any> = (props) => {
-  // We could handle loading errors within this component, but for flexibility as to where we put the error notification, we push it back to the main app
+  // We could handle image display errors within this component, but we pass it up
+  // to thhe parent so that all child components can be aware
+
   return (
-    <section className="image-container">
-      <button onClick={props.goLeft} className={`arrow-button left-button`}>
-        <img src="left-arrow.png" alt="left arrow" />
-      </button>
-      <div className="image-middle">
-        <img
-          alt="main"
-          id="img"
-          src={props.src}
-          crossOrigin="anonymous"
-          onLoad={(e) => {
-            props.onLoaded(e.target);
-          }}
-          onError={(e: any) => {
-            props.onError(e);
-          }}
-          className={`main-image ${
-            props.imageAnimate ? "image-fadein" : "image-fadeout"
-          }`}
-        />
-        <div className="error-panel">
-          <p className={`${props.isError ? "show-error" : "hide-error"}`}>
-            Error: This image cannot be acquired - please try another.
-          </p>
-          <p className={`${props.isError ? "show-error" : "hide-error"}`}>
-            {props.src}
-          </p>
+    <section className="section image-section">
+      <div className="container">
+        <div className="image-middle">
+          <button onClick={props.goLeft} className="button is-info">
+            Previous Sample
+          </button>
+          &nbsp;
+          <button onClick={props.goRight} className="button is-info">
+            Next Sample
+          </button>
+          {(!props.isError && props.src.length > 1 && (
+            <img
+              alt="main"
+              id="img"
+              src={props.src}
+              crossOrigin="anonymous"
+              onLoad={(e) => {
+                props.onLoaded(e.target);
+              }}
+              onError={(e: any) => {
+                props.onError(e);
+              }}
+              className={`main-image ${
+                props.imageAnimate ? "image-fadein" : "image-fadeout"
+              }`}
+            />
+          )) || (
+            <div className="error-panel">
+              <p className={`${props.isError ? "show-error" : "hide-error"}`}>
+                Error: This image cannot be acquired - please try another.
+              </p>
+              <p className={`${props.isError ? "show-error" : "hide-error"}`}>
+                {props.src}
+              </p>
+            </div>
+          )}
         </div>
       </div>
-      <button onClick={props.goRight} className={`arrow-button right-button`}>
-        <img src="left-arrow.png" alt="right arrow" />
-      </button>
     </section>
   );
 };

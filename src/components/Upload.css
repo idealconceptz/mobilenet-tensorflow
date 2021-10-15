@@ -1,0 +1,34 @@
+.upload-panel {
+  margin: 1vh auto 0 auto;
+  background: white;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  max-width: 1024px;
+}
+.upload-section {
+  padding: 1rem 1rem;
+  float: left;
+  width: 50%;
+  text-align: center;
+}
+.input-text {
+  font-weight: normal;
+}
+.file {
+  display: block;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.file-cta {
+  padding: 0rem 1rem !important;
+  width: 100%;
+}
+.file-name {
+  max-width: 100%;
+  width: 100%;
+}
+.file-label {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  font-weight: 600;
+}
