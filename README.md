@@ -1,20 +1,18 @@
 # TensorFlow MobileNet Classification of Images
 
-## TODO
+## DEMO
 
-1. More responsive design
-2. Better photo carousel
+[View Live Demo] (https://mobilenetdemo1.vercel.app/)
 
-Use TensorFlow/Mobilenet to classify/recognise images in your browser [View Live Demo] (https://mobilenetdemo1.vercel.app/)
-
-Upload images from your computer and paste remote image urls.
+Upload images from your computer, take photos with your phone, or copy/paste remote image urls.
 
 ## Incorporates
 
 1. @tensorflow-models/mobilenet
 2. React components & hooks
 3. Typescript
-4. CSS animations
+4. Bulma & FontAwesome
+5. CSS animations
 
 ## Available Scripts
 
